@@ -3,16 +3,15 @@ import json
 import matplotlib.pyplot as plt
 
 data_dir = "./data"
-edges_list_dir = data_dir + "/edges_list/byuser"
-data_graphs_path = data_dir + "/graphs"
+full_net_props_dir = data_dir + "/full_net_properties"
 
-with open(data_dir + "/bipartite_info.json", "r") as json_file:
+with open(full_net_props_dir + "/bipartite_info.json", "r") as json_file:
     full_net_info = json.load(json_file)
 
-degree_users = np.load(edges_list_dir + "/bipartite_degree_users.npy")
-degree_movies = np.load(edges_list_dir + "/bipartite_degree_movies.npy")
+degree_users = np.load(full_net_props_dir + "/degree_users.npy")
+degree_movies = np.load(full_net_props_dir + "/degree_movies.npy")
 
-bin_num = 15
+bin_num = 100
 
 ####
 bins_linear_users = np.linspace(0, full_net_info["max_degree_users"], bin_num)
@@ -43,44 +42,44 @@ counts_log_movies, new_bins_log_movies = np.histogram(degree_movies, bins_log_mo
 counts_log_movies_norm, new_bins_log_movies = np.histogram(degree_movies, bins_log_movies, density=True)
 
 
+fig, ax = plt.subplots(figsize=(20, 12))
+ax.bar(
+    bins_linear_users[:-1], 
+    counts_linear_users_norm, 
+    alpha=0.6, 
+    align="edge", 
+    edgecolor="k",
+    label="", 
+    width=np.diff(bins_linear_users)
+);
+ax.set_xscale("linear"); ax.set_yscale("linear");
+ax.set_xlabel("Degree"); ax.set_ylabel("Counts")
+plt.show();
+
+
 # fig, ax = plt.subplots(figsize=(20, 12))
-# ax.bar(
-#     bins_log_users[:-1], 
+# ax.scatter(
+#     bins_log_users_center, 
 #     counts_log_users, 
 #     alpha=0.6, 
-#     align="edge", 
 #     edgecolor="k",
 #     label="", 
-#     width=np.diff(bins_log_users)
 # );
 # ax.set_xscale("log"); ax.set_yscale("log");
 # ax.set_xlabel("Degree"); ax.set_ylabel("Counts")
+# ax.set_title("Users")
 # plt.show();
 
-
-fig, ax = plt.subplots(figsize=(20, 12))
-ax.scatter(
-    bins_log_users_center, 
-    counts_log_users, 
-    alpha=0.6, 
-    edgecolor="k",
-    label="", 
-);
-ax.set_xscale("log"); ax.set_yscale("log");
-ax.set_xlabel("Degree"); ax.set_ylabel("Counts")
-ax.set_title("Users")
-plt.show();
-
-fig, ax = plt.subplots(figsize=(20, 12))
-ax.scatter(
-    bins_log_movies_center, 
-    counts_log_movies, 
-    alpha=0.6, 
-    edgecolor="k",
-    label="", 
-);
-ax.set_xscale("log"); ax.set_yscale("log");
-ax.set_xlabel("Degree"); ax.set_ylabel("Counts")
-ax.set_title("Movies")
-plt.show();
+# fig, ax = plt.subplots(figsize=(20, 12))
+# ax.scatter(
+#     bins_log_movies_center, 
+#     counts_log_movies, 
+#     alpha=0.6, 
+#     edgecolor="k",
+#     label="", 
+# );
+# ax.set_xscale("log"); ax.set_yscale("log");
+# ax.set_xlabel("Degree"); ax.set_ylabel("Counts")
+# ax.set_title("Movies")
+# plt.show();
 

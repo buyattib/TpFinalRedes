@@ -12,4 +12,4 @@ df = df[["users", "movies", "rating"]]
 df.sort_values("users", inplace=True)
 
 edges_by_users = df.to_numpy()
-np.save(edges_list_dir + "/byuser/all_edges.npy", edges_by_users)
+np.save(edges_list_dir + "/all_edges_byusers.npy", edges_by_users)

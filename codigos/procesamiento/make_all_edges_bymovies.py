@@ -1,11 +1,10 @@
 import numpy as np
-import os
 import pandas as pd
 
 data_dir = "./data"
 edges_list_dir = data_dir + "/edges_list"
 
-data_files = [file_name for file_name in os.listdir(edges_list_dir) if "edges" in file_name]
+data_files = [f"edges{i}.npy" for i in range(4)]
 dfs = []
 
 for index, data_file in enumerate(data_files):
